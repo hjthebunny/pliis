@@ -20,7 +20,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ includeBtn }) => {
 
   useEffect(() => {
     if (query && query?.length !== 0) {
-      setKeyword(query);
     } else {
       setKeyword("");
     }
@@ -32,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ includeBtn }) => {
 
   const handleSearch = () => {
     if (keyword.trim()) {
-      router.push(`/search?q=${encodeURIComponent(keyword)}`);
+      router.push(`/search?q=${keyword}`);
     }
     if (inputRef.current) {
       inputRef.current.blur();
@@ -40,14 +39,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ includeBtn }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.nativeEvent.isComposing === false && e.key === "Enter") {
       handleSearch();
     }
   };
   const handleReset = () => {
     setKeyword("");
   };
-
   return (
     <div
       className={`block border  p-3 lg:w-1/3 md:w-1/2 w-3/4 rounded-full bg-[#F2EFFF] flex jusitify-center items-center gap-2 ${
