@@ -6,6 +6,8 @@ import { useInView } from "react-intersection-observer";
 import { BiSolidRightArrow } from "react-icons/bi";
 import SearchBar from "./ui/searchBar";
 import { useRouter } from "next/navigation";
+import { useKeywordStore } from "./lib/store";
+
 const Home = () => {
   const router = useRouter();
   const controls = useAnimation();
@@ -13,9 +15,16 @@ const Home = () => {
   const { ref, inView } = useInView();
   const { ref: fadeRef, inView: fadeInView } = useInView();
   const [scrollY, setScrollY] = useState(0);
+  const { keyword } = useKeywordStore();
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
+  };
+
+  const handleSearch = () => {
+    if (keyword.trim()) {
+      router.push(`/search?q=${keyword}`);
+    }
   };
 
   useEffect(() => {
@@ -28,7 +37,7 @@ const Home = () => {
   useEffect(() => {
     if (inView) {
       controls.start({
-        opacity: 1 - scrollY / 5000,
+        opacity: 1 - scrollY / 500,
         scale: 1 - scrollY / 2000,
         transition: { duration: 0.5, ease: "easeOut" },
       });
@@ -46,7 +55,7 @@ const Home = () => {
   }, [fadeControls, fadeInView, scrollY]);
 
   return (
-    <main className="h-screen w-screen sticky top-0 ">
+    <main className="h-screen w-screen ">
       <div className="w-screen h-screen flex justify-center items-center">
         <motion.div
           ref={ref}
@@ -78,7 +87,7 @@ const Home = () => {
         <SearchBar />
         <button
           className="bg-[#9039FE] p-[10px] mt-[40px] rounded-full text-white flex justify-center items-center gap-2 hover:scale-125 hover:bg-[#7406FF] tranform duration-200 ease-out"
-          onClick={() => router.push("/search")}
+          onClick={handleSearch}
         >
           <p>find my playlist !</p>
           <BiSolidRightArrow />

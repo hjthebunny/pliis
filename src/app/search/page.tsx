@@ -1,5 +1,4 @@
 import SearchBar from "../ui/searchBar";
-import Image from "next/image";
 import Card from "../ui/card";
 import Logo from "../ui/logo";
 
