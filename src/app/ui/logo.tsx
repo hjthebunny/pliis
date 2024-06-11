@@ -15,6 +15,7 @@ const Logo: React.FC<LogoProps> = ({ scale }) => {
       alt="logo"
       className="mb-[32px] cursor-pointer"
       onClick={() => router.push("/")}
+      priority={true}
     />
   );
 };

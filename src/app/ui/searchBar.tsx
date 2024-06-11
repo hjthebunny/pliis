@@ -20,6 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ includeBtn }) => {
 
   useEffect(() => {
     if (query && query?.length !== 0) {
+      setKeyword(query);
     } else {
       setKeyword("");
     }
